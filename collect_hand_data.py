@@ -10,7 +10,7 @@ scissorStart = False
 rockImages = 0
 paperImages = 0
 scissorImages = 0
-totalImages = 250
+totalImages = 1000
 
 while True:
     ret, frame = videoCapture.read()
