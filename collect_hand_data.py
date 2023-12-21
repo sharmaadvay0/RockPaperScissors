@@ -14,21 +14,21 @@ totalImages = 250
 
 while True:
     ret, frame = videoCapture.read()
-    frameWithRect = cv2.rectangle(frame, (300, 225), (600,525), (0,0,0), 5)
+    frameWithRect = cv2.rectangle(frame, (290, 205), (610,525), (0,0,0), 5)
     cv2.imshow('Input', frame)
 
     if rockStart and rockImages < totalImages:
-        cv2.imwrite(f"images/rock/{rockImages}.jpg", frame[225:525, 300:600])
+        cv2.imwrite(f"images/rock/{rockImages}.jpg", frame[215:515, 300:600])
         print("Collected Rock image " + str(rockImages))
         rockImages += 1
     
     if paperStart and paperImages < totalImages:
-        cv2.imwrite(f"images/paper/{paperImages}.jpg", frame[225:525, 300:600])
+        cv2.imwrite(f"images/paper/{paperImages}.jpg", frame[215:515, 300:600])
         print("Collected Paper image " + str(paperImages))
         paperImages += 1
 
     if scissorStart and scissorImages < totalImages:
-        cv2.imwrite(f"images/scissors/{scissorImages}.jpg", frame[225:525, 300:600])
+        cv2.imwrite(f"images/scissors/{scissorImages}.jpg", frame[215:515, 300:600])
         print("Collected Scissor image " + str(scissorImages))
         scissorImages += 1
     c = cv2.waitKey(1)
