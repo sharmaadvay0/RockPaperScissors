@@ -2,16 +2,23 @@ import cv2
 import torch
 import numpy as np
 import random
+import os
 
 userScore = 0
 cpuScore = 0
 userMoves = []
+d = np.load("rps_data.npy")
+l = np.load("rps_labels.npy")
+data = np.copy(d)
+labels = np.copy(l)
 
 def detectHand(frame):
     image = frame[215:515, 300:600].astype(np.float32) / 255
     adjustedImage = torch.FloatTensor(np.expand_dims(image.transpose((2,0,1)), axis=0)).to("mps")
     handDetection = classifierNet(adjustedImage)
     userMoves.append(handDetection.argmax(1))
+    if len(userMoves) >= 3:
+        globals()['labels'] = np.append(labels, handDetection.cpu().argmax(1))
     if handDetection.argmax(1) == 0:
         return "rock"
     elif handDetection.argmax(1) == 1:
@@ -33,6 +40,7 @@ def cpuMove():
             cpuMove = 2
         elif cpuPrediction == 2:
             cpuMove = 0
+        globals()['data'] = np.vstack((data, torch.FloatTensor(userMoves[-3:]).cpu().numpy()))
         
     cpuHand = ""
     if cpuMove == 0:
@@ -94,3 +102,8 @@ while True:
         userScore += userGain
         cpuScore += computerGain
     cv2.imshow('Rock Paper Scissors', frame)
+
+os.remove("rps_data.npy")
+np.save("rps_data.npy", data)
+os.remove("rps_labels.npy")
+np.save("rps_labels.npy", labels)
