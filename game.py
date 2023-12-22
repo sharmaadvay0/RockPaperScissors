@@ -1,14 +1,7 @@
 import cv2
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
 import random
-
-# if torch.backends.mps.is_available():
-#     device = "mps"
-# else:
-#     device = "cpu"
-# print(f"Using {device} device")
 
 userScore = 0
 cpuScore = 0
