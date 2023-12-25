@@ -2,7 +2,6 @@ import cv2
 import torch
 import numpy as np
 import random
-import os
 
 userScore = 0
 cpuScore = 0
@@ -16,15 +15,15 @@ def detectHand(frame):
     image = frame[215:515, 300:600].astype(np.float32) / 255
     adjustedImage = torch.FloatTensor(np.expand_dims(image.transpose((2,0,1)), axis=0)).to("mps")
     handDetection = classifierNet(adjustedImage)
-    userMoves.append(handDetection.argmax(1))
+
     if len(userMoves) >= 6:
-        globals()['labels'] = np.append(labels, handDetection.cpu().argmax(1))
+        globals()['labels'] = np.append(labels, handDetection.cpu().argmax(1).numpy())
     if handDetection.argmax(1) == 0:
-        return "rock"
+        return 0, "rock"
     elif handDetection.argmax(1) == 1:
-        return "paper"
+        return 1, "paper"
     elif handDetection.argmax(1) == 2:
-        return "scissors"
+        return 2, "scissors"
     return "Not Detected"
 
 def cpuMove():
@@ -84,26 +83,25 @@ while True:
     ret, frame = videoCapture.read()
     cv2.rectangle(frame, (290, 205), (610,525), (0,0,0), 5)
     cv2.putText(frame, currentDetection, (100,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
-    cv2.putText(frame, currentCPUMove, (600,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
-    cv2.putText(frame, currentWinner, (1100,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
-    cv2.putText(frame, str(userScore) + " - " + str(cpuScore), (1600,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
+    cv2.putText(frame, currentCPUMove, (500,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
+    cv2.putText(frame, currentWinner, (1000,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
+    cv2.putText(frame, "User Score: " + str(userScore) + ", " + "AI Score: " + str(cpuScore), (1400,100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,0), 3)
 
     c = cv2.waitKey(1)
 
     if c == ord("q"):
+        np.save("rps_data.npy", data)
+        np.save("rps_labels.npy", labels)
         break
     elif c == ord(" "):
-        userMove = detectHand(frame)
         computerMove = cpuMove()
+        userNumber, userMove = detectHand(frame)
         currentDetection = "Your Move: " + userMove
         currentCPUMove = "Computer Move: " + computerMove
         userGain, computerGain, result = determineWinner(userMove, computerMove)
         currentWinner = "Result: " + result
         userScore += userGain
         cpuScore += computerGain
-    cv2.imshow('Rock Paper Scissors', frame)
+        userMoves.append(userNumber)
 
-# os.remove("rps_data.npy")
-np.save("rps_data.npy", data)
-# os.remove("rps_labels.npy")
-np.save("rps_labels.npy", labels)
+    cv2.imshow('Rock Paper Scissors', frame)
