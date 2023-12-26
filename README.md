@@ -1,6 +1,6 @@
 # Rock-Paper-Scissors AI
 
-This project implements a rock-paper-scissors game by using a CNN to classify rock, paper or scissors hand gestures and an RNN to predict the user's next move to play against them.
+This project implements an AI-based rock-paper-scissors game by using a CNN to classify rock, paper or scissors hand gestures and an RNN to predict the user's next move to play against them.
 
 ## Screenshot
 
