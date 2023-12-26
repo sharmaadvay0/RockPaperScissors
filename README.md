@@ -1,6 +1,6 @@
-# Rock Paper Scissors AI
+# Rock-Paper-Scissors AI
 
-This project implements a rock paper scissors game by using a CNN to identify rock, paper or scissors hand gestures and a RNN to predict the user's next move to play against them.
+This project implements a rock-paper-scissors game by using a CNN to classify rock, paper or scissors hand gestures and an RNN to predict the user's next move to play against them.
 
 ## Screenshot
 
@@ -10,7 +10,7 @@ This project implements a rock paper scissors game by using a CNN to identify ro
 
 The CNN can predict the hand gesture with about **99%** accuracy on the test set. The RNN can predict the user's move with an accuracy of **62%** on the test set.
 
-Given that rock paper scissors inherently has some randomness, predicting an opponent's next move with 62% accuracy is actually quite high.
+Given that rock-paper-scissors inherently has some randomness, predicting an opponent's next move with 62% accuracy is actually quite high.
 
 In practice, the hand gesture prediction works nearly perfectly and the game AI is able to beat the user fairly consistently.
 
@@ -45,7 +45,7 @@ Note that the computer plays the first 6 games randomly and then uses the RNN to
 
 ## Data Collection
 
-The CNN was trained by collecting a 1000 images each of rock, paper and scissors hand gestures. The RNN was trained by collecting around 500 games of rock paper scissors.
+The CNN was trained by collecting 1000 images each of rock, paper and scissors hand gestures. The RNN was trained by collecting around 500 games of rock paper scissors.
 
 ## Libraries and Technologies
 
