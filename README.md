@@ -8,9 +8,9 @@ This project implements an AI-based rock-paper-scissors game by using a CNN to c
 
 ## Neural Network Accuracy and Results
 
-The CNN can predict the hand gesture with about **99%** accuracy on the test set. The RNN can predict the user's move with an accuracy of **62%** on the test set.
+The CNN can predict the hand gesture with about **99%** accuracy on the test set. 
 
-Given that rock-paper-scissors inherently has some randomness, predicting an opponent's next move with 62% accuracy is actually quite high.
+The RNN can predict the user's move with an accuracy of **62%** on the test set. Given that rock-paper-scissors inherently has some randomness, predicting an opponent's next move with 62% accuracy is actually quite high. In fact, this is **nearly 2x better than a random baseline model** which would have an accuracy of 33.33%! 
 
 In practice, the hand gesture prediction works nearly perfectly and the game AI is able to beat the user fairly consistently.
 
